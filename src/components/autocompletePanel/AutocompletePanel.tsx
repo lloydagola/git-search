@@ -1,3 +1,4 @@
+import axios from "axios"
 import React, {useState, useEffect} from "react"
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
@@ -13,6 +14,7 @@ interface UserProps{
 }
 
 const Result = ({user}:UserProps) => {
+    const [followers, setFollowers] = useState([])
 
     const StyledAvatar = styled.img`
         width: 50px;
@@ -24,13 +26,40 @@ const Result = ({user}:UserProps) => {
         text-decoration: none;
     `
 
+    const StyledName = styled.p`
+        font-weight: bold;
+        grid-area: name;
+        margin:0;
+        text-decoration: none;
+    `
+    const StyledFollowers = styled.div`
+        display: flex;
+        flex-direction: column;
+
+        p{
+            margin: 0;
+            font-size: 0.8rem;
+        }
+
+        img{            
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin:.1rem;
+        }
+        div{
+            display: flex;
+            flex-direction: row;
+        }
+    `
+
     const StyledResultGrid = styled.div`
         display: grid;
         grid-template-areas: 
                             "avatar name name" 
                             "avatar desc desc";
+                            "avatar followers followers";
         grid-gap: .4rem;
-        align-items: center;
         text-align: left;
         padding: .4rem;
         border-bottom: 1px solid #0392da;
@@ -43,20 +72,40 @@ const Result = ({user}:UserProps) => {
             grid-area: avatar;
         }
         p{
-            grid-area: name;
-            margin:0;
-            text-decoration: none;
+           
         }
         span{
             grid-area: desc;        
         }
     `
 
+    const fetchUserFollowers = async () => {
+
+        try{
+            const {data} = await axios.get(`https://api.github.com/users/${user.login}/followers`)
+            setFollowers(data)
+            console.log(followers)
+
+        }
+        catch(err){
+            console.log("could not fetch followers...")
+        }
+
+        
+    }
+
+    useEffect(() => {
+        fetchUserFollowers()
+    }, [])
+
     return  <StyledLink to={`/results/${user.login}`} key={user.id}>
                 <StyledResultGrid>
                     <StyledAvatar src={user.avatar_url} alt={user.login} />
-                    <p>{user.login}</p>
-                    <span>score: {user.score}</span>
+                    <StyledName>{user.login}</StyledName>
+                    <StyledFollowers>
+                        <p>Followers: {followers.length}</p> 
+                        {followers.length > 0 && followers.slice(0,6).map(({login = '', avatar_url=''}) => <div><img src={avatar_url}/></div>)} 
+                    </StyledFollowers>
                 </StyledResultGrid>
             </StyledLink>
 
@@ -67,8 +116,8 @@ const AutocompletePanel = ({results = []}:Props) => {
     const renderUsers = () => {
 
         return<>
+            {results.length > 0 && `${results.length}+ hits`}
             {results.length> 0 && results.slice(0, 10).map((user:User) => <Result user={user}/>)}
-            {results.length < 1 && <>0</>}
         </>
     }
     
