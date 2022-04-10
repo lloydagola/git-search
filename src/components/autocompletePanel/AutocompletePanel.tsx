@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react"
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
-
 //models
 import {User} from '../../models/user'
 
@@ -21,10 +20,18 @@ const Result = ({user}:UserProps) => {
         border-radius: 50%;
     `
 
-    return  <>
-                <Link to={`/results/${user.login}`} key={user.id}><p>{user.login}</p></Link>
+    const StyledResultGrid = styled.div`
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        grid-gap: 2rem;
+        align-items: center;
+        text-align: left;
+    `
+
+    return  <StyledResultGrid>
                 <StyledAvatar src={user.avatar_url} alt={user.login} />
-            </>
+                <Link to={`/results/${user.login}`} key={user.id}><p>{user.login}</p></Link>
+            </StyledResultGrid>
 
 }
 
