@@ -20,18 +20,45 @@ const Result = ({user}:UserProps) => {
         border-radius: 50%;
     `
 
-    const StyledResultGrid = styled.div`
-        display: grid;
-        grid-template-columns: 1fr 5fr;
-        grid-gap: 2rem;
-        align-items: center;
-        text-align: left;
+    const StyledLink = styled(Link)`
+        text-decoration: none;
     `
 
-    return  <StyledResultGrid>
-                <StyledAvatar src={user.avatar_url} alt={user.login} />
-                <Link to={`/results/${user.login}`} key={user.id}><p>{user.login}</p></Link>
-            </StyledResultGrid>
+    const StyledResultGrid = styled.div`
+        display: grid;
+        grid-template-areas: 
+                            "avatar name name" 
+                            "avatar desc desc";
+        grid-gap: .4rem;
+        align-items: center;
+        text-align: left;
+        padding: .4rem;
+        border-bottom: 1px solid #0392da;
+        text-decoration: none;
+        color: #fff;
+        grid-area: name;
+
+        
+        img{
+            grid-area: avatar;
+        }
+        p{
+            grid-area: name;
+            margin:0;
+            text-decoration: none;
+        }
+        span{
+            grid-area: desc;        
+        }
+    `
+
+    return  <StyledLink to={`/results/${user.login}`} key={user.id}>
+                <StyledResultGrid>
+                    <StyledAvatar src={user.avatar_url} alt={user.login} />
+                    <p>{user.login}</p>
+                    <span>score: {user.score}</span>
+                </StyledResultGrid>
+            </StyledLink>
 
 }
 
