@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react"
 import {Link} from 'react-router-dom'
+import styled from 'styled-components'
 
 //models
 import {User} from '../../models/user'
@@ -14,9 +15,15 @@ interface UserProps{
 
 const Result = ({user}:UserProps) => {
 
+    const StyledAvatar = styled.img`
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    `
+
     return  <>
                 <Link to={`/results/${user.login}`} key={user.id}><p>{user.login}</p></Link>
-                <img src={user.avatar_url} alt={user.login} />
+                <StyledAvatar src={user.avatar_url} alt={user.login} />
             </>
 
 }
