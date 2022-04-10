@@ -14,7 +14,10 @@ interface UserProps{
 
 const Result = ({user}:UserProps) => {
 
-    return <Link to={`/results/${user.login}`} key={user.id}><p>{user.login}</p></Link>
+    return  <>
+                <Link to={`/results/${user.login}`} key={user.id}><p>{user.login}</p></Link>
+                <img src={user.avatar_url} alt={user.login} />
+            </>
 
 }
 
