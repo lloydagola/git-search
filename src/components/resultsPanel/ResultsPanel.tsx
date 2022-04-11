@@ -140,4 +140,49 @@ const ResultsPanel = ({results = [], searchCount}:Props) => {
 
 }
 
+const Pagination = ({searchCount = 0}) => {
+    const [state, setState] = useState({
+        results:[],
+        currentPage: 1,
+        resultsPerPage: 6
+      })
+
+    const { results, currentPage, resultsPerPage } = state;
+
+    const handleClick = (page:number) => {
+        setState((pstate) => ({
+          ...pstate,
+          currentPage: page
+        }))
+      }
+
+      // Logic for displaying pages
+    const indexOfLastResult = currentPage * resultsPerPage;
+    const indexOfFirstResult = indexOfLastResult - resultsPerPage;
+    const currentResults = results.slice(indexOfFirstResult, indexOfLastResult);
+
+
+      // Logic for displaying page numbers
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(searchCount / resultsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
+      const renderPageNumbers = pageNumbers.map(number => {
+        return (
+          <li
+            key={number}
+            onClick={ e => handleClick(number)}
+          >
+            {number}
+          </li>
+        );
+      });
+
+
+      return <ul id="page-numbers">
+               {renderPageNumbers}
+            </ul>
+}
+
 export default ResultsPanel
