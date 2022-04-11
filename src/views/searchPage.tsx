@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {User} from '../models/user'
 import SearchBar from '../components/searchbar/SearchBar'
-import AutocompletePanel from '../components/autocompletePanel/AutocompletePanel'
+import ResultsPanel from '../components/resultsPanel/ResultsPanel'
 
 
 interface Props{
@@ -29,7 +29,7 @@ const SearchPage = (props:Props) => {
           <form action="" onSubmit={submitSearch}>
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>          
           </form>
-          <AutocompletePanel results={results}/>
+          <ResultsPanel results={results}/>
         </div>   
     </>
   )

@@ -95,12 +95,16 @@ const Result = ({user}:UserProps) => {
     }
 
     useEffect(() => {
-        setFollowers([])
+        if(followers.length > 0){
+            console.log('clearing followers in useEffect')
+            setFollowers([])
+        }
         
         console.log('fetchUserFollowers()')
 
         return () => {
             setFollowers([])
+            console.log('clearing followers  in useEffect return...')
           }
     }, [])
     
@@ -118,13 +122,13 @@ const Result = ({user}:UserProps) => {
 
 }
 
-const AutocompletePanel = ({results = []}:Props) => {
+const ResultsPanel = ({results = []}:Props) => {
     
     const renderUsers = () => {
 
         return<>
             {results.length > 0 && `${results.length}+ hits`}
-            {results.length> 0 && results.slice(0, 10).map((user:User) => <Result user={user}/>)}
+            {results.length> 0 && results.slice(0, 10).map((user:User) => <Result key={user.id} user={user}/>)}
         </>
     }
     
@@ -135,4 +139,4 @@ const AutocompletePanel = ({results = []}:Props) => {
 
 }
 
-export default AutocompletePanel
+export default ResultsPanel

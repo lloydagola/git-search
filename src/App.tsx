@@ -19,7 +19,7 @@ import UserPage from './views/userPage'
 
 //components
 import SearchBar from './components/searchbar/SearchBar'
-import AutocompletePanel from './components/autocompletePanel/AutocompletePanel'
+import ResultsPanel from './components/resultsPanel/ResultsPanel'
 
 
 const App:React.FC = () => {
