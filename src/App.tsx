@@ -59,7 +59,6 @@ const App:React.FC = () => {
   useEffect(() => {
 
     if(results.length > 0){
-      console.log('safisha rada...')
       setResults([])
     }
 

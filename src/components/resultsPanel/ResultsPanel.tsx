@@ -6,9 +6,15 @@ import styled from 'styled-components'
 import {User} from '../../models/user'
 
 
+const StyledResults = styled.div`
+    height: 75vh;
+    width: 50%;
+    margin: 2rem auto;
+`
+
 const StyledAvatar = styled.img`
-width: 50px;
-height: 50px;
+width: 4rem;
+height: 4rem;
 border-radius: 50%;
 `
 
@@ -44,29 +50,40 @@ div{
 `
 
 const StyledResultGrid = styled.div`
-display: grid;
-grid-template-areas: 
-                    "avatar name name" 
-                    "avatar desc desc";
-                    "avatar followers followers";
-grid-gap: .4rem;
-text-align: left;
-padding: .4rem;
-border-bottom: 1px solid #0392da;
-text-decoration: none;
-color: #fff;
-grid-area: name;
+    display: flex;
+    flex-direction: row;
+
+    
+    grid-gap: .4rem;
+    text-align: left;
+    padding: .4rem;
+    border-bottom: 1px solid #0392da;
+    text-decoration: none;
+    color: #fff;
+
+    >span{
+        padding: .4rem;
+    }
 
 
-img{
-    grid-area: avatar;
-}
-p{
-   
-}
-span{
-    grid-area: desc;        
-}
+`
+
+const StyledPageNav = styled.ul` 
+    display: flex;
+    flex-direction: row;
+`
+
+const StyledPageNumber = styled.span`
+    li{
+        list-style: none;
+        margin: 0 .5rem;
+        padding: .5rem;
+        background: #0392da;
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+        cursor: pointer;
+    }
 `
 
 interface Props{
@@ -80,6 +97,12 @@ interface Props{
 
 interface UserProps{
     user: User
+}
+
+interface PageProps{
+    page: number
+    setPage: React.Dispatch<React.SetStateAction<number>>
+    
 }
 
 const Result = ({user}:UserProps) => {
@@ -119,11 +142,13 @@ const Result = ({user}:UserProps) => {
     return  <StyledLink to={`/results/${user.login}`} key={user.id}>
                 <StyledResultGrid>
                     <StyledAvatar src={user.avatar_url} alt={user.login} />
-                    <StyledName>{user.login}</StyledName>
-                    <StyledFollowers>
-                        <p>Followers: {followers.length}</p> 
-                        {followers.length > 0 && followers.slice(0,6).map(({login = '', avatar_url=''}) => <div><img src={avatar_url}/></div>)} 
-                    </StyledFollowers>
+                    <span>
+                        <StyledName>{user.login}</StyledName>
+                        <StyledFollowers>
+                            <p>Followers: {followers.length}</p> 
+                            {followers.length > 0 && followers.slice(0,6).map(({login = '', avatar_url=''}) => <div><img src={avatar_url}/></div>)} 
+                        </StyledFollowers>
+                    </span>
                 </StyledResultGrid>
             </StyledLink>
 
@@ -144,15 +169,6 @@ const ResultsPanel = ({
 
     const { currentPage, resultsPerPage } = state;
 
-    const handleClick = (page:number) => {
-        console.log(page)
-        console.log(state)
-        // setState((pstate) => ({
-        //   ...pstate,
-        //   currentPage: page
-        // }))
-      }
-
       // Logic for displaying pages
     const indexOfLastResult = currentPage * resultsPerPage;
     const indexOfFirstResult = indexOfLastResult - resultsPerPage;
@@ -162,43 +178,39 @@ const ResultsPanel = ({
       // Logic for displaying page numbers
     const pageNumbers = [];
     for (let i = 1; i <= Math.ceil(searchCount / resultsPerPage); i++) {
+
+        if(i == 10){
+            break
+        }
       pageNumbers.push(i);
     }
 
-      const renderPageNumbers = pageNumbers.map(number => {
+      const renderPageNumbers = pageNumbers.map(pageNumber => {
         return (
-          <li
-            key={number}
-            onClick={ e => setPage(number)}
+          <StyledPageNumber
+            key={pageNumber}
+            onClick={ e => setPage(pageNumber)}
           >
-            {number}
-          </li>
+            <li style={{background:`${pageNumber ===  page ? '#fec018' : ''}`}}>{pageNumber}</li>
+          </StyledPageNumber>
         );
       });
     
     const renderUsers = () => {
 
-        return<>
-            {currentResults.length > 0 && `${currentResults.length}+ hits`}
+        return<StyledResults>
+            {searchCount > 0 && `${searchCount}+ hits`}
             {currentResults.length> 0 && currentResults.map((user:User) => <Result key={user.id} user={user}/>)}
-        </>
+        </StyledResults>
     }
     
     
     return <>
         {renderUsers()}
-        {renderPageNumbers}
+        <StyledPageNav>{renderPageNumbers}</StyledPageNav>
     </>
 
 }
 
-const Pagination = ({searchCount = 0}:{searchCount:number}) => {
-    
-
-
-      return <ul id="page-numbers">
-              
-            </ul>
-}
 
 export default ResultsPanel
