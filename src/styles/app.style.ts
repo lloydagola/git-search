@@ -13,7 +13,7 @@ export const StyledSearchBar = styled.input`
 `
 export const StyledResults = styled.div`
     height: 75vh;
-    width: 50%;
+    width: 50vw;
     margin: 2rem auto;
 `
 export const StyledAvatar = styled.img`

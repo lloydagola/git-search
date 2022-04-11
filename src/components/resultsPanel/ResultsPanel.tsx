@@ -1,21 +1,20 @@
-import axios from "axios"
+
 import React, {useState, useEffect} from "react"
-import {
-    StyledResults,
-    StyledAvatar,
-    StyledLink,
-    StyledName,
-    StyledFollowers,
-    StyledResultGrid,
-    StyledPageNav,
-    StyledPageNumber
-} from "../../styles/app.style"
+
 //models
 import {User} from '../../models/user'
 
+//components
+import ResultRow from "../resultRow/ResultRow"
+import {
+    StyledResults,
+    StyledPageNav,
+    StyledPageNumber
+} from "../../styles/app.style"
 
 
-interface Props{
+
+interface ResultsPanelProps{
     results: User[]
     searchCount: number
     page: number
@@ -24,9 +23,6 @@ interface Props{
     setPer_page: React.Dispatch<React.SetStateAction<number>>
 }
 
-interface UserProps{
-    user: User
-}
 
 interface PageProps{
     page: number
@@ -34,54 +30,7 @@ interface PageProps{
     
 }
 
-const Result = ({user}:UserProps) => {
-    const [followers, setFollowers] = useState([])
 
-
-    const fetchUserFollowers = async () => {
-
-        try{
-            const {data} = await axios.get(`https://api.github.com/users/${user.login}/followers`)
-            setFollowers(data)
-            console.log(followers)
-
-        }
-        catch(err){
-            console.log("could not fetch followers...")
-        }
-
-        
-    }
-
-    useEffect(() => {
-        if(followers.length > 0){
-            console.log('clearing followers in useEffect')
-            setFollowers([])
-        }
-        
-        console.log('fetchUserFollowers()')
-
-        return () => {
-            setFollowers([])
-            console.log('clearing followers  in useEffect return...')
-          }
-    }, [])
-    
-
-    return  <StyledLink to={`/results/${user.login}`} key={user.id}>
-                <StyledResultGrid>
-                    <StyledAvatar src={user.avatar_url} alt={user.login} />
-                    <span>
-                        <StyledName>{user.login}</StyledName>
-                        <StyledFollowers>
-                            <p>Followers: {followers.length}</p> 
-                            {followers.length > 0 && followers.slice(0,6).map(({login = '', avatar_url=''}) => <div><img src={avatar_url}/></div>)} 
-                        </StyledFollowers>
-                    </span>
-                </StyledResultGrid>
-            </StyledLink>
-
-}
 
 const ResultsPanel = ({
     results = [], 
@@ -90,7 +39,7 @@ const ResultsPanel = ({
     per_page,
     setPage,
     setPer_page
-}:Props) => {
+}:ResultsPanelProps) => {
     const [state, setState] = useState({
         currentPage: 1,
         resultsPerPage: 6
@@ -129,7 +78,7 @@ const ResultsPanel = ({
 
         return<StyledResults>
             {searchCount > 0 && `${searchCount}+ hits`}
-            {currentResults.length> 0 && currentResults.map((user:User) => <Result key={user.id} user={user}/>)}
+            {currentResults.length> 0 && currentResults.map((user:User) => <ResultRow key={user.id} user={user}/>)}
         </StyledResults>
     }
     

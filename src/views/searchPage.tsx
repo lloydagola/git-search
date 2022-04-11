@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {User} from '../models/user'
-import SearchBar from '../components/searchbar/SearchBar'
+import SearchForm from '../components/searchForm/SearchForm'
 import ResultsPanel from '../components/resultsPanel/ResultsPanel'
 
 
@@ -37,7 +37,7 @@ const SearchPage = (props:Props) => {
         <h1>Search Users</h1>
         <div>
           <form action="" onSubmit={submitSearch}>
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>          
+            <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>          
           </form>
           <ResultsPanel 
             results={results} 
