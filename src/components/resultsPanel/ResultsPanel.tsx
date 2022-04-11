@@ -124,36 +124,20 @@ const Result = ({user}:UserProps) => {
 }
 
 const ResultsPanel = ({results = [], searchCount}:Props) => {
-    
-    const renderUsers = () => {
-
-        return<>
-            {results.length > 0 && `${results.length}+ hits`}
-            {results.length> 0 && results.map((user:User) => <Result key={user.id} user={user}/>)}
-        </>
-    }
-    
-    
-    return <>
-        {renderUsers()}
-    </>
-
-}
-
-const Pagination = ({searchCount = 0}) => {
     const [state, setState] = useState({
-        results:[],
         currentPage: 1,
         resultsPerPage: 6
       })
 
-    const { results, currentPage, resultsPerPage } = state;
+    const { currentPage, resultsPerPage } = state;
 
     const handleClick = (page:number) => {
-        setState((pstate) => ({
-          ...pstate,
-          currentPage: page
-        }))
+        console.log(page)
+        console.log(state)
+        // setState((pstate) => ({
+        //   ...pstate,
+        //   currentPage: page
+        // }))
       }
 
       // Logic for displaying pages
@@ -178,10 +162,30 @@ const Pagination = ({searchCount = 0}) => {
           </li>
         );
       });
+    
+    const renderUsers = () => {
+
+        return<>
+            {currentResults.length > 0 && `${currentResults.length}+ hits`}
+            {currentResults.length> 0 && currentResults.map((user:User) => <Result key={user.id} user={user}/>)}
+            <Pagination searchCount={searchCount}/>
+        </>
+    }
+    
+    
+    return <>
+        {renderUsers()}
+        {renderPageNumbers}
+    </>
+
+}
+
+const Pagination = ({searchCount = 0}:{searchCount:number}) => {
+    
 
 
       return <ul id="page-numbers">
-               {renderPageNumbers}
+              
             </ul>
 }
 
