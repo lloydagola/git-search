@@ -26,6 +26,7 @@ const App:React.FC = () => {
 
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [results, setResults] = useState<User[]>([])
+  const [resultsCount, setResultsCount] = useState<number>(0)
 
   const handleSearch = async (searchTerm:string) => {
 
@@ -34,13 +35,14 @@ const App:React.FC = () => {
       setResults([])
     }
 
-    const {items} = await fetchUsers(searchTerm)
+    const {items, total_count} = await fetchUsers(searchTerm)
     if(items.length <1){
       console.log('sorry, no users found...')
       return
     }
 
      setResults(items)
+     setResultsCount(total_count)
     console.log('searching for: ', searchTerm)
      return
   }
@@ -82,6 +84,7 @@ const App:React.FC = () => {
               searchTerm = {searchTerm}
               setSearchTerm = {setSearchTerm}
               results ={results}
+              searchCount={resultsCount}
             />}
           />
           <Route path="/results/:user" element={<UserPage/>}

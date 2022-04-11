@@ -9,6 +9,7 @@ interface Props{
     searchTerm: string
     setSearchTerm: React.Dispatch<React.SetStateAction<string>>
     results: User[]
+    searchCount:number
 
 }
 
@@ -18,7 +19,8 @@ const SearchPage = (props:Props) => {
     submitSearch,
     searchTerm,
     setSearchTerm,
-    results
+    results,
+    searchCount = 0
   } = props
 
  
@@ -29,7 +31,7 @@ const SearchPage = (props:Props) => {
           <form action="" onSubmit={submitSearch}>
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>          
           </form>
-          <ResultsPanel results={results}/>
+          <ResultsPanel results={results} searchCount={searchCount} />
         </div>   
     </>
   )

@@ -129,7 +129,7 @@ const ResultsPanel = ({results = [], searchCount}:Props) => {
 
         return<>
             {results.length > 0 && `${results.length}+ hits`}
-            {results.length> 0 && results.slice(0, 10).map((user:User) => <Result key={user.id} user={user}/>)}
+            {results.length> 0 && results.map((user:User) => <Result key={user.id} user={user}/>)}
         </>
     }
     
