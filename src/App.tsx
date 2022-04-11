@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './App.css'
 
-import { render } from "react-dom";
 import {
   BrowserRouter,
   Routes,
@@ -16,10 +15,6 @@ import {User} from './models/user'
 //views
 import SearchPage from './views/searchPage'
 import UserPage from './views/userPage'
-
-//components
-import SearchBar from './components/searchbar/SearchBar'
-import ResultsPanel from './components/resultsPanel/ResultsPanel'
 
 
 const App:React.FC = () => {

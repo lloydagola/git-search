@@ -1,90 +1,19 @@
 import axios from "axios"
 import React, {useState, useEffect} from "react"
-import {Link} from 'react-router-dom'
-import styled from 'styled-components'
+import {
+    StyledResults,
+    StyledAvatar,
+    StyledLink,
+    StyledName,
+    StyledFollowers,
+    StyledResultGrid,
+    StyledPageNav,
+    StyledPageNumber
+} from "../../styles/app.style"
 //models
 import {User} from '../../models/user'
 
 
-const StyledResults = styled.div`
-    height: 75vh;
-    width: 50%;
-    margin: 2rem auto;
-`
-
-const StyledAvatar = styled.img`
-width: 4rem;
-height: 4rem;
-border-radius: 50%;
-`
-
-const StyledLink = styled(Link)`
-text-decoration: none;
-`
-
-const StyledName = styled.p`
-font-weight: bold;
-grid-area: name;
-margin:0;
-text-decoration: none;
-`
-const StyledFollowers = styled.div`
-display: flex;
-flex-direction: column;
-
-p{
-    margin: 0;
-    font-size: 0.8rem;
-}
-
-img{            
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    margin:.1rem;
-}
-div{
-    display: flex;
-    flex-direction: row;
-}
-`
-
-const StyledResultGrid = styled.div`
-    display: flex;
-    flex-direction: row;
-
-    
-    grid-gap: .4rem;
-    text-align: left;
-    padding: .4rem;
-    border-bottom: 1px solid #0392da;
-    text-decoration: none;
-    color: #fff;
-
-    >span{
-        padding: .4rem;
-    }
-
-
-`
-
-const StyledPageNav = styled.ul` 
-    display: flex;
-    flex-direction: row;
-`
-
-const StyledPageNumber = styled.span`
-    li{
-        list-style: none;
-        margin: 0 .5rem;
-        padding: .5rem;
-        background: #0392da;
-        height: 2rem;
-        width: 2rem;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-`
 
 interface Props{
     results: User[]
