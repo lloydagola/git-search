@@ -31,6 +31,16 @@ interface PageProps{
 }
 
 
+const arrayFromRange = (start:number, end:number) => {
+    let length = end - start + 1;
+    /*
+        Create an array of certain length and set the elements within it from
+      start value to end value.
+    */
+    return Array.from({ length }, (_, idx) => idx + start);
+  };
+
+
 
 const ResultsPanel = ({
     results = [], 
@@ -53,15 +63,16 @@ const ResultsPanel = ({
     const currentResults = results.slice(indexOfFirstResult, indexOfLastResult);
 
 
+    const totalNumberOfPages = Math.ceil(searchCount / resultsPerPage);
       // Logic for displaying page numbers
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(searchCount / resultsPerPage); i++) {
+    const pageNumbers = arrayFromRange(1, 10);
+    // for (let i = 1; i <= Math.ceil(totalNumberOfPages); i++) {
 
-        if(i == 10){
-            break
-        }
-      pageNumbers.push(i);
-    }
+    //     if(i == 10){
+    //         break
+    //     }
+    //   pageNumbers.push(i);
+    // }
 
       const renderPageNumbers = pageNumbers.map(pageNumber => {
         return (
@@ -89,6 +100,7 @@ const ResultsPanel = ({
     </>
 
 }
+
 
 
 export default ResultsPanel
