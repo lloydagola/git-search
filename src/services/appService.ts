@@ -1,9 +1,9 @@
 import apiUtils from '../utils/apiUtils';
 
-  export const fetchUsers = async (searchTerm:string) => {
+  export const fetchUsers = async (searchTerm:string, page:number, per_page:number) => {
 
     try{
-      const {data = {}} = await apiUtils.get(`/search/users?q=${searchTerm}&page=2&per_page=6`)
+      const {data = {}} = await apiUtils.get(`/search/users?q=${searchTerm}&page=${page}&per_page=${per_page}`)
       if(!data){
         console.log('sorry, no users found...')
         throw new Error('Error:sorry, no data received...')

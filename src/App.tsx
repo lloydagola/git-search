@@ -28,14 +28,16 @@ const App:React.FC = () => {
   const [results, setResults] = useState<User[]>([])
   const [resultsCount, setResultsCount] = useState<number>(0)
 
+  const [page, setPage] = useState(1)
+  const [per_page, setPer_page] = useState(6)
+
   const handleSearch = async (searchTerm:string) => {
 
     if(results.length > 0){
-      console.log('clearing results in useEffect')
       setResults([])
     }
 
-    const {items, total_count} = await fetchUsers(searchTerm)
+    const {items, total_count} = await fetchUsers(searchTerm, page, per_page)
     if(items.length <1){
       console.log('sorry, no users found...')
       return
@@ -43,7 +45,6 @@ const App:React.FC = () => {
 
      setResults(items)
      setResultsCount(total_count)
-    console.log('searching for: ', searchTerm)
      return
   }
 
@@ -58,7 +59,7 @@ const App:React.FC = () => {
   useEffect(() => {
 
     if(results.length > 0){
-      console.log('clearing results in useEffect')
+      console.log('safisha rada...')
       setResults([])
     }
 
@@ -68,10 +69,21 @@ const App:React.FC = () => {
 
     return () => {
         clearTimeout(timer)
-        console.log('clearing useEffect results in return...')
         setResults([])
     }
   }, [searchTerm])
+
+  useEffect(
+    () => {
+      
+      if(searchTerm != ''){
+        handleSearch(searchTerm)
+      }
+
+    },
+    [page],
+  )
+  
 
 
   return (
@@ -80,11 +92,15 @@ const App:React.FC = () => {
         <Routes>
           <Route path="/" element={
             <SearchPage
-              submitSearch ={submitSearch}
-              searchTerm = {searchTerm}
-              setSearchTerm = {setSearchTerm}
-              results ={results}
-              searchCount={resultsCount}
+            searchTerm = {searchTerm}
+            results ={results}
+            searchCount={resultsCount}
+            page={page}
+            per_page={per_page}
+            submitSearch ={submitSearch}
+            setSearchTerm = {setSearchTerm}
+            setPage={setPage}
+            setPer_page={setPer_page}
             />}
           />
           <Route path="/results/:user" element={<UserPage/>}

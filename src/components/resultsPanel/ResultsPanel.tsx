@@ -5,9 +5,77 @@ import styled from 'styled-components'
 //models
 import {User} from '../../models/user'
 
+
+const StyledAvatar = styled.img`
+width: 50px;
+height: 50px;
+border-radius: 50%;
+`
+
+const StyledLink = styled(Link)`
+text-decoration: none;
+`
+
+const StyledName = styled.p`
+font-weight: bold;
+grid-area: name;
+margin:0;
+text-decoration: none;
+`
+const StyledFollowers = styled.div`
+display: flex;
+flex-direction: column;
+
+p{
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+img{            
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin:.1rem;
+}
+div{
+    display: flex;
+    flex-direction: row;
+}
+`
+
+const StyledResultGrid = styled.div`
+display: grid;
+grid-template-areas: 
+                    "avatar name name" 
+                    "avatar desc desc";
+                    "avatar followers followers";
+grid-gap: .4rem;
+text-align: left;
+padding: .4rem;
+border-bottom: 1px solid #0392da;
+text-decoration: none;
+color: #fff;
+grid-area: name;
+
+
+img{
+    grid-area: avatar;
+}
+p{
+   
+}
+span{
+    grid-area: desc;        
+}
+`
+
 interface Props{
     results: User[]
     searchCount: number
+    page: number
+    per_page: number
+    setPage: React.Dispatch<React.SetStateAction<number>>
+    setPer_page: React.Dispatch<React.SetStateAction<number>>
 }
 
 interface UserProps{
@@ -17,68 +85,6 @@ interface UserProps{
 const Result = ({user}:UserProps) => {
     const [followers, setFollowers] = useState([])
 
-    const StyledAvatar = styled.img`
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-    `
-
-    const StyledLink = styled(Link)`
-        text-decoration: none;
-    `
-
-    const StyledName = styled.p`
-        font-weight: bold;
-        grid-area: name;
-        margin:0;
-        text-decoration: none;
-    `
-    const StyledFollowers = styled.div`
-        display: flex;
-        flex-direction: column;
-
-        p{
-            margin: 0;
-            font-size: 0.8rem;
-        }
-
-        img{            
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin:.1rem;
-        }
-        div{
-            display: flex;
-            flex-direction: row;
-        }
-    `
-
-    const StyledResultGrid = styled.div`
-        display: grid;
-        grid-template-areas: 
-                            "avatar name name" 
-                            "avatar desc desc";
-                            "avatar followers followers";
-        grid-gap: .4rem;
-        text-align: left;
-        padding: .4rem;
-        border-bottom: 1px solid #0392da;
-        text-decoration: none;
-        color: #fff;
-        grid-area: name;
-
-        
-        img{
-            grid-area: avatar;
-        }
-        p{
-           
-        }
-        span{
-            grid-area: desc;        
-        }
-    `
 
     const fetchUserFollowers = async () => {
 
@@ -123,7 +129,14 @@ const Result = ({user}:UserProps) => {
 
 }
 
-const ResultsPanel = ({results = [], searchCount}:Props) => {
+const ResultsPanel = ({
+    results = [], 
+    searchCount,    
+    page,
+    per_page,
+    setPage,
+    setPer_page
+}:Props) => {
     const [state, setState] = useState({
         currentPage: 1,
         resultsPerPage: 6
@@ -156,7 +169,7 @@ const ResultsPanel = ({results = [], searchCount}:Props) => {
         return (
           <li
             key={number}
-            onClick={ e => handleClick(number)}
+            onClick={ e => setPage(number)}
           >
             {number}
           </li>
@@ -168,7 +181,6 @@ const ResultsPanel = ({results = [], searchCount}:Props) => {
         return<>
             {currentResults.length > 0 && `${currentResults.length}+ hits`}
             {currentResults.length> 0 && currentResults.map((user:User) => <Result key={user.id} user={user}/>)}
-            <Pagination searchCount={searchCount}/>
         </>
     }
     
