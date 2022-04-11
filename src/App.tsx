@@ -29,6 +29,11 @@ const App:React.FC = () => {
 
   const handleSearch = async (searchTerm:string) => {
 
+    if(results.length > 0){
+      console.log('clearing results in useEffect')
+      setResults([])
+    }
+
     const {items} = await fetchUsers(searchTerm)
     if(items.length <1){
       console.log('sorry, no users found...')
@@ -36,8 +41,11 @@ const App:React.FC = () => {
     }
 
      setResults(items)
+    console.log('searching for: ', searchTerm)
      return
   }
+
+
   const submitSearch = (e:React.FormEvent) => {
     e.preventDefault()
 
@@ -47,12 +55,19 @@ const App:React.FC = () => {
   
   useEffect(() => {
 
+    if(results.length > 0){
+      console.log('clearing results in useEffect')
+      setResults([])
+    }
+
     const timer = setTimeout(() => {
        searchTerm != '' && handleSearch(searchTerm)
     } , 500)
 
     return () => {
         clearTimeout(timer)
+        console.log('clearing useEffect results in return...')
+        setResults([])
     }
   }, [searchTerm])
 
