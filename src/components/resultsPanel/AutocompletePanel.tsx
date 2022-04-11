@@ -95,8 +95,15 @@ const Result = ({user}:UserProps) => {
     }
 
     useEffect(() => {
-        fetchUserFollowers()
+        setFollowers([])
+        
+        console.log('fetchUserFollowers()')
+
+        return () => {
+            setFollowers([])
+          }
     }, [])
+    
 
     return  <StyledLink to={`/results/${user.login}`} key={user.id}>
                 <StyledResultGrid>
