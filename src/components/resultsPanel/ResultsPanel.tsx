@@ -7,6 +7,7 @@ import {User} from '../../models/user'
 
 interface Props{
     results: User[]
+    searchCount: number
 }
 
 interface UserProps{
@@ -122,7 +123,7 @@ const Result = ({user}:UserProps) => {
 
 }
 
-const ResultsPanel = ({results = []}:Props) => {
+const ResultsPanel = ({results = [], searchCount}:Props) => {
     
     const renderUsers = () => {
 
