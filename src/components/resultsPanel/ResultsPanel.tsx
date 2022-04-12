@@ -21,8 +21,10 @@ interface ResultsPanelProps{
     searchCount: number
     page: number
     per_page: number
+    loading: boolean
     setPage: React.Dispatch<React.SetStateAction<number>>
     setPer_page: React.Dispatch<React.SetStateAction<number>>
+    setLoading: (loading: boolean) => void;
 }
 
 type PaginationRange = number[]
@@ -33,7 +35,9 @@ const ResultsPanel = ({
     page,
     per_page,
     setPage,
-    setPer_page
+    setPer_page,
+    loading,
+    setLoading
 }:ResultsPanelProps) => {
     const [state, setState] = useState({
         currentPage: 1,
@@ -68,7 +72,7 @@ const ResultsPanel = ({
     
       let lastPage = paginationRange?[paginationRange.length - 1]:0
 
-      console.log(paginationRange)
+      //console.log(paginationRange)
 
       // Logic for displaying pages
     const indexOfLastResult = currentPage * resultsPerPage;
@@ -116,8 +120,9 @@ const ResultsPanel = ({
     
     
     return <>
-        <Users/>
-        {currentResults.length > 0 && <PageNumbers/>}
+        {loading && <div>Loading...</div>}
+        {!loading && <Users/>}
+        {!loading && currentResults.length > 0 && <PageNumbers/>}
     </>
 
 }

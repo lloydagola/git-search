@@ -22,8 +22,9 @@ const App:React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [results, setResults] = useState<User[]>([])
   const [resultsCount, setResultsCount] = useState<number>(0)
+  const [loading, setLoading] = useState(true)
 
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState<number>(1)
   const [per_page, setPer_page] = useState(5)
 
   const handleSearch = async (searchTerm:string) => {
@@ -32,15 +33,23 @@ const App:React.FC = () => {
       setResults([])
     }
 
-    const {items, total_count} = await fetchUsers(searchTerm, page, per_page)
-    if(items.length <1){
-      console.log('sorry, no users found...')
-      return
-    }
+    try {
+      setLoading(true)
+      const {items, total_count} = await fetchUsers(searchTerm, page, per_page)
+      if(items.length <1){
+        console.log('sorry, no users found...')
+        return
+      }
 
-     setResults(items)
-     setResultsCount(total_count)
-     return
+      setResults(items)
+      setResultsCount(total_count)
+      setLoading(false)
+      return
+      
+    } catch (error) {
+      console.log('could not complete search...')
+    }
+    
   }
 
 
@@ -86,15 +95,17 @@ const App:React.FC = () => {
         <Routes>
           <Route path="/" element={
             <SearchPage
-            searchTerm = {searchTerm}
-            results ={results}
-            searchCount={resultsCount}
-            page={page}
-            per_page={per_page}
-            submitSearch ={submitSearch}
-            setSearchTerm = {setSearchTerm}
-            setPage={setPage}
-            setPer_page={setPer_page}
+              searchTerm = {searchTerm}
+              results ={results}
+              searchCount={resultsCount}
+              page={page}
+              per_page={per_page}
+              submitSearch ={submitSearch}
+              setSearchTerm = {setSearchTerm}
+              setPage={setPage}
+              setPer_page={setPer_page}
+              loading={loading}
+              setLoading={setLoading}
             />}
           />
           <Route path="/results/:user" element={<UserPage/>}

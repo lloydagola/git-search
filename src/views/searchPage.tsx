@@ -12,23 +12,26 @@ interface Props{
     searchCount:number
     page: number
     per_page: number
+    loading:boolean
     setPage: React.Dispatch<React.SetStateAction<number>>
-    setPer_page: React.Dispatch<React.SetStateAction<number>>
-
+    setPer_page: React.Dispatch<React.SetStateAction<number>>  
+    setLoading: (loading: boolean) => void
 }
 
 const SearchPage = (props:Props) => {
 
   const {
-    submitSearch,
     searchTerm,
-    setSearchTerm,
     results,
     searchCount = 0,
     page,
     per_page,
+    loading,
+    submitSearch,
+    setSearchTerm,
     setPage,
-    setPer_page
+    setPer_page,
+    setLoading
   } = props
 
  
@@ -44,6 +47,8 @@ const SearchPage = (props:Props) => {
             per_page={per_page}
             setPage={setPage}
             setPer_page={setPer_page} 
+            loading={false}
+            setLoading={setLoading}
           />
         </div>   
     </>
