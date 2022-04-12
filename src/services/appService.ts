@@ -35,3 +35,25 @@ import apiUtils from '../utils/apiUtils';
       return{}
     }
   }
+
+  export const fetchUserFollowers = async (searchTerm:string) => {
+
+    try{
+        if(searchTerm){
+            const {data} = await apiUtils.get(`/users/${searchTerm}/followers`)
+            if(!data){
+                console.log('sorry, no followers found...')
+                throw new Error('Error:sorry, no data received...')
+            }
+
+            return data
+        }
+
+    }
+    catch(err){
+        console.log("could not fetch followers...")
+        return []
+    }
+
+    
+}

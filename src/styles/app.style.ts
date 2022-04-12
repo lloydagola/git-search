@@ -11,10 +11,9 @@ export const StyledSearchBar = styled.input`
     margin: .4rem;
 
 `
-export const StyledResults = styled.div`
-    height: 75vh;
+export const StyledAppBody = styled.div`
     width: 50vw;
-    margin: 2rem auto;
+    margin: 1rem auto 0 auto;
 `
 export const StyledAvatar = styled.img`
 width: 4rem;
@@ -45,7 +44,7 @@ img{
     border-radius: 50%;
     margin:.1rem;
 }
-div{
+span{
     display: flex;
     flex-direction: row;
 }
@@ -53,14 +52,16 @@ div{
 export const StyledResultGrid = styled.div`
     display: flex;
     flex-direction: row;
-
-    
     grid-gap: .4rem;
     text-align: left;
     padding: .4rem;
     border-bottom: 1px solid #0392da;
     text-decoration: none;
     color: #fff;
+
+    >div{
+        padding:0 2rem;
+    }
 
     >span{
         padding: .4rem;

@@ -36,9 +36,7 @@ const SearchPage = (props:Props) => {
     <>
         <h1>Search Users</h1>
         <div>
-          <form action="" onSubmit={submitSearch}>
-            <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>          
-          </form>
+          <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm} submitSearch={submitSearch}/>  
           <ResultsPanel 
             results={results} 
             searchCount={searchCount}

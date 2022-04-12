@@ -24,7 +24,7 @@ const App:React.FC = () => {
   const [resultsCount, setResultsCount] = useState<number>(0)
 
   const [page, setPage] = useState(1)
-  const [per_page, setPer_page] = useState(6)
+  const [per_page, setPer_page] = useState(5)
 
   const handleSearch = async (searchTerm:string) => {
 

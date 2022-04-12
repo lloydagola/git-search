@@ -7,10 +7,12 @@ import {User} from '../../models/user'
 //components
 import ResultRow from "../resultRow/ResultRow"
 import {
-    StyledResults,
+    StyledAppBody,
     StyledPageNav,
     StyledPageNumber
 } from "../../styles/app.style"
+
+import {arrayFromRange} from '../../utils/searchUtils'
 
 
 
@@ -31,14 +33,7 @@ interface PageProps{
 }
 
 
-const arrayFromRange = (start:number, end:number) => {
-    let length = end - start + 1;
-    /*
-        Create an array of certain length and set the elements within it from
-      start value to end value.
-    */
-    return Array.from({ length }, (_, idx) => idx + start);
-  };
+
 
 
 
@@ -66,37 +61,35 @@ const ResultsPanel = ({
     const totalNumberOfPages = Math.ceil(searchCount / resultsPerPage);
       // Logic for displaying page numbers
     const pageNumbers = arrayFromRange(1, 10);
-    // for (let i = 1; i <= Math.ceil(totalNumberOfPages); i++) {
 
-    //     if(i == 10){
-    //         break
-    //     }
-    //   pageNumbers.push(i);
-    // }
+    const PageNumbers = () => {
 
-      const renderPageNumbers = pageNumbers.map(pageNumber => {
-        return (
-          <StyledPageNumber
-            key={pageNumber}
-            onClick={ e => setPage(pageNumber)}
-          >
-            <li style={{background:`${pageNumber ===  page ? '#fec018' : ''}`}}>{pageNumber}</li>
-          </StyledPageNumber>
-        );
-      });
+        const renderLinks = () => {
+            return pageNumbers.map(pageNumber => <StyledPageNumber
+                    key={pageNumber}
+                    onClick={ e => setPage(pageNumber)}
+                >
+                    <li style={{background:`${pageNumber ===  page ? '#fec018' : ''}`}}>{pageNumber}</li>
+                </StyledPageNumber>
+                )
+
+        }
+          
+        return <StyledPageNav>{renderLinks()}</StyledPageNav>
+    }
     
-    const renderUsers = () => {
+    const Users = () => {
 
-        return<StyledResults>
+        return<StyledAppBody>
             {searchCount > 0 && `${searchCount}+ hits`}
             {currentResults.length> 0 && currentResults.map((user:User) => <ResultRow key={user.id} user={user}/>)}
-        </StyledResults>
+        </StyledAppBody>
     }
     
     
     return <>
-        {renderUsers()}
-        <StyledPageNav>{renderPageNumbers}</StyledPageNav>
+        <Users/>
+        {currentResults.length > 0 && <PageNumbers/>}
     </>
 
 }
