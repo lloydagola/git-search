@@ -99,7 +99,7 @@ const ResultsPanel = ({
             <span
                 onClick={onPrevious}
             >
-                Previous
+                Prev
             </span>
              {renderLinks()}
              <span

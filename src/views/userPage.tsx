@@ -1,5 +1,5 @@
 import React, {useEffect, useState, } from 'react'
-import {useParams} from 'react-router-dom'
+import {useParams, Link} from 'react-router-dom'
 
 import styled from 'styled-components'
 
@@ -17,7 +17,8 @@ import {
   StyledUserPageAvatar,
   StyledUserSummary,
   StyledUserDetails,
-  StyledParagraph
+  StyledParagraph,
+  StyledSimpleNav
 } from '../styles/app.style'
 
 
@@ -99,6 +100,10 @@ const UserPage = () => {
     
   return (<>          
           <StyledAppBody>
+            
+            <StyledSimpleNav>
+              <Link to='/'>Home</Link>
+            </StyledSimpleNav>
             <StyledUserGrid>
               {renderAvatar()}
               <StyledUserSummary>

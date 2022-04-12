@@ -17,14 +17,15 @@ export const StyledAppBody = styled.div`
     margin:auto;
 
     @media ${devices.tabletL} {
-        width: 50vw;
+        width: fit-content;
         margin: 1rem auto 0 auto;
     }
 `
 export const StyledAvatar = styled.img`
-width: 4rem;
-height: 4rem;
-border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    margin-right: 1.2rem;
 `
 export const StyledLink = styled(Link)`
     text-decoration: none;
@@ -42,13 +43,14 @@ flex-direction: column;
 p{
     margin: 0;
     font-size: 0.8rem;
+    padding: .4rem;
 }
 
 img{            
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    margin:.1rem;
+    margin:.2rem;
 }
 span{
     display: flex;
@@ -142,4 +144,9 @@ export const StyledUserDetails = styled.div`
   text-align: left;
   padding:2rem;
   padding: 0 2rem
+`
+export const StyledSimpleNav = styled.nav` 
+    a{
+        color: #fff;
+    }
 `
