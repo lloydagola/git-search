@@ -91,7 +91,7 @@ const App:React.FC = () => {
 
   return (
     <div className="App">
-       <BrowserRouter>
+       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           <Route path="/" element={
             <SearchPage
