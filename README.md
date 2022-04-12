@@ -1,4 +1,28 @@
-# Getting Started with Create React App
+# Interesting Highlight
+-----------------------------------
+-Especially interesting was the use of usePagination() hook to dynamically generate pagination numbers and reduce performance issues. Coupled with the api GET requests this significantly improves performance of the application as the application only needs to process a subset of results returned by the server 
+
+# Notable.
+-I am pleased about the use of React.useMemo() + Array.from() to dynamically generate page numbers for paginated search results based on
+configurable variables such as 'number results to display per page' 
+
+# next features/improvements 
+-----------------------------------
+-Given more time, I would like to refactor common logic using hooks and react context
+-I would like to complete the pagination numbers to better respond to page ranges
+-it would also be beneficial to list a user's repos and 'commit heat map' implement proper navigation
+
+
+
+
+
+
+
+
+
+
+
+# Scripts
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -44,3 +68,4 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
