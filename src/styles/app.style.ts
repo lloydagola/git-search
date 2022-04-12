@@ -13,6 +13,8 @@ export const StyledSearchBar = styled.input`
 
 `
 export const StyledAppBody = styled.div`
+    width: 96vw;
+    margin:auto;
 
     @media ${devices.tabletL} {
         width: 50vw;
@@ -63,9 +65,7 @@ export const StyledResultGrid = styled.div`
     text-decoration: none;
     color: #fff;
 
-    >div{
-        padding:0 2rem;
-    }
+    
 
     >span{
         padding: .4rem;
@@ -93,4 +93,51 @@ export const StyledPageNumber = styled.span`
         border-radius: 4rem;
         cursor: pointer;
     }
+`
+export const StyledUserGrid = styled.div` 
+  height: 500px;
+  gap: 0px 0px; 
+  display:flex;
+  flex-direction: column;
+
+  @media ${devices.tabletL}{ 
+    display: grid; 
+    grid-template-columns: 0.7fr 1.3fr; 
+    grid-template-rows: 0.7fr 1.3fr; 
+    grid-template-areas: 
+      "avatar name"
+      "blank user_details";
+  }
+
+  
+`
+export const StyledUserPageAvatar = styled.img` 
+  width: 12rem;
+  height: 12rem;
+  margin: 0 auto;
+  border-radius: 50%;
+  padding:2rem;
+  border: 1px solid #fff;
+  margin: 2rem 0;
+`
+export const StyledUserSummary = styled.div`
+  text-align: left;
+  margin:2rem
+
+  
+`
+
+export const StyledParagraph = styled.p`
+    border: 1px solid #fff;
+    padding: 0.5rem 1rem ;
+
+    h1{
+        margin: 0;
+    }
+`
+
+export const StyledUserDetails = styled.div`
+  text-align: left;
+  padding:2rem;
+  padding: 0 2rem
 `

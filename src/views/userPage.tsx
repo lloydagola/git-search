@@ -11,41 +11,28 @@ import {UserDetails} from '../models/user'
 
 //services
 import {fetchUser} from '../services/appService'
+import { devices } from '../utils/screenUtils'
+
+import {
+  StyledUserGrid,
+  StyledUserPageAvatar,
+  StyledUserSummary,
+  StyledUserDetails,
+  StyledParagraph
+} from '../styles/app.style'
 
 
-const StyledUserGrid = styled.div`  
-  display: grid; 
-  height: 500px;
-  grid-template-columns: 0.7fr 1.3fr; 
-  grid-template-rows: 0.7fr 1.3fr; 
-  gap: 0px 0px; 
-  grid-template-areas: 
-    "avatar name"
-    "blank user_details";
-`
-
-const StyledAvatar = styled.img` 
-  width: 12rem;
-  height: 12rem;
-  margin: 0 auto;
-  border-radius: 50%;
-  padding:2rem
-`
-
-const StyledUserSummary = styled.div`
-  text-align: left;
-  margin:2rem
-`
-const StyledUserDetails = styled.div`
-  text-align: left;
-  padding: 0 2rem
-`
 
 
 
 const UserPage = () => {
     const [userDetails, setUserDetails] = useState<UserDetails>()
     const [userName, setUserName] = useState<string>('')
+    const [name, setName] = useState<string>('')
+    const [bio, setBio] = useState<string>('')
+    const [location, setLocation] = useState<string>('')
+    const [blog, setBlog] = useState<string>('')
+
 
     let { user = '' } = useParams();
 
@@ -53,6 +40,10 @@ const UserPage = () => {
         const res = await fetchUser(searchTerm)
         setUserDetails(res)
         setUserName(res.login)
+        setName(res.name)
+        setBio(res.bio)
+        setLocation(res.location)
+        setBlog(res.blog)
     }
 
     useEffect(() => {
@@ -64,23 +55,66 @@ const UserPage = () => {
         console.log('cleanup')
       }
     }, [user])
+
+    const renderAvatar = () => {
+
+      if(!userDetails || !userDetails.avatar_url){
+        return <StyledUserPageAvatar src='/assets/images/user.jpg' alt={userDetails?.login}/>
+      }
+      
+      return <StyledUserPageAvatar src={userDetails?.avatar_url} alt={userDetails?.login} />
+      
+
+    }
+
+    const renderUserName = (userName:string) => {
+      if(!userName){
+        return <StyledParagraph><h1>User name</h1></StyledParagraph>
+      }
+      return <StyledParagraph><h1>{userName}</h1></StyledParagraph>
+    }
+
+    const renderName = (name:string) => {
+      if(!userName){
+        return <StyledParagraph>...no name</StyledParagraph>
+      }
+      return <StyledParagraph>{name}</StyledParagraph>
+    }
+
+    const renderBio = (bio:string) => {
+      if(!bio){
+        return <StyledParagraph>...no bio</StyledParagraph>
+      }
+      return <StyledParagraph>{ bio }</StyledParagraph>
+    }
+
+    const renderLocation = (location:string) => {
+      if(!location){
+        return <StyledParagraph>...no location</StyledParagraph>
+      }
+      return <StyledParagraph>{ location }</StyledParagraph>
+    }
+    const renderBlog = (blog:string) => {
+      if(!blog){
+        return <StyledParagraph>...no blog</StyledParagraph>
+      }
+      return <StyledParagraph>{ blog }</StyledParagraph>
+    }
     
     
-  return (<>
-          
+  return (<>          
           <StyledAppBody>
             <StyledUserGrid>
-              <StyledAvatar src={userDetails?.avatar_url} alt={userDetails?.login} />
+              {renderAvatar()}
               <StyledUserSummary>
-                <h1>{userName}</h1>
-                <p>{ userDetails?.name }</p>
-                <p>{ userDetails?.bio }</p>
-                <p>{ userDetails?.location }</p>
+                {renderUserName(userName)}
+                {renderName(name)}
+                {renderBio(bio)}                
+                {renderLocation(location) }
+                {renderBlog(blog)}
               </StyledUserSummary>
               <span/>
               <StyledUserDetails>
-                <p>{ userDetails?.blog }</p>
-                <Followers login={userName?userName:''}/>
               </StyledUserDetails>
 
             </StyledUserGrid>
