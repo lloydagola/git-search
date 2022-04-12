@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import {Link} from 'react-router-dom'
+import {devices} from '../utils/screenUtils'
 
 export const StyledSearchBar = styled.input` 
-    width: 80%;
+    width: fit-content;
     height: 2.4rem;
     border-radius: 4rem;
     text-align: center;
@@ -12,8 +13,11 @@ export const StyledSearchBar = styled.input`
 
 `
 export const StyledAppBody = styled.div`
-    width: 50vw;
-    margin: 1rem auto 0 auto;
+
+    @media ${devices.tabletL} {
+        width: 50vw;
+        margin: 1rem auto 0 auto;
+    }
 `
 export const StyledAvatar = styled.img`
 width: 4rem;
