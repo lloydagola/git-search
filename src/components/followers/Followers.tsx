@@ -14,16 +14,23 @@ interface Props{
 
 const Followers = ({login}:Props) => {
     const [followers, setFollowers] = useState([])
-
-    console.log(login)
+    const [error, setError] = useState({message:'', status:false})
 
 
     const handleFetchUserFollowers = async () => {
         const res = await fetchUserFollowers(login)
         
+        console.log(res)
+
         if(res){
-            console.log(res)
             setFollowers(res)        
+        }
+        else{
+            console.log('could not fetch followers')
+            setError({
+                message: 'could not fetch followers',
+                status: true
+            })
         }
     }
 
@@ -41,7 +48,8 @@ const Followers = ({login}:Props) => {
 
 
     return <StyledFollowers>
-        <p>Followers: {followers?.length}</p> 
+        {error.status && <p>An error occurred {error.message}</p> }
+        {<p>Followers: {followers?.length}</p> }
         <span>
             {
                 followers.length > 0 

@@ -31,6 +31,7 @@ import apiUtils from '../utils/apiUtils';
 
     }
     catch(err){
+      console.log(err)
       console.log('sorry, an error occurred preventing the users from being fetched...')
       return{}
     }
