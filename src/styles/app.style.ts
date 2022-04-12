@@ -68,7 +68,7 @@ export const StyledResultGrid = styled.div`
     
 
     >span{
-        padding: .4rem;
+        padding: .2rem;
     }
 
 
@@ -88,10 +88,14 @@ export const StyledPageNumber = styled.span`
         margin: 0 .5rem;
         padding: .5rem;
         background: #0392da;
-        height: 2rem;
-        min-width: 2rem;
+        height: 1.2rem;
+        min-width: 1.2rem;
         border-radius: 4rem;
         cursor: pointer;
+        font-size: .8rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `
 export const StyledUserGrid = styled.div` 
