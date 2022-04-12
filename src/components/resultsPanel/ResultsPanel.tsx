@@ -11,9 +11,9 @@ import {
     StyledPageNav,
     StyledPageNumber
 } from "../../styles/app.style"
+import { usePagination, DOTS } from '../../hooks/usePagination'
 
 import {arrayFromRange} from '../../utils/searchUtils'
-
 
 
 interface ResultsPanelProps{
@@ -25,17 +25,7 @@ interface ResultsPanelProps{
     setPer_page: React.Dispatch<React.SetStateAction<number>>
 }
 
-
-interface PageProps{
-    page: number
-    setPage: React.Dispatch<React.SetStateAction<number>>
-    
-}
-
-
-
-
-
+type PaginationRange = number[]
 
 const ResultsPanel = ({
     results = [], 
@@ -51,23 +41,49 @@ const ResultsPanel = ({
       })
 
     const { currentPage, resultsPerPage } = state;
+    const siblingCount = 1
+    
+    const paginationRange:any = usePagination({
+        currentPage,
+        totalCount:searchCount,
+        siblingCount,
+        pageSize:per_page
+      });
+
+      if (page === 0 || paginationRange.length < 2) {
+        return null;
+      }
+
+      const onPageChange = (page:number) => {
+        setPage(page)
+      }
+    
+      const onNext = () => {
+        onPageChange(page + 1);
+      };
+    
+      const onPrevious = () => {
+        onPageChange(page - 1);
+      };
+    
+      let lastPage = paginationRange?[paginationRange.length - 1]:0
+
+      console.log(paginationRange)
 
       // Logic for displaying pages
     const indexOfLastResult = currentPage * resultsPerPage;
     const indexOfFirstResult = indexOfLastResult - resultsPerPage;
     const currentResults = results.slice(indexOfFirstResult, indexOfLastResult);
 
-
-    const totalNumberOfPages = Math.ceil(searchCount / resultsPerPage);
       // Logic for displaying page numbers
     const pageNumbers = arrayFromRange(1, 10);
 
     const PageNumbers = () => {
 
         const renderLinks = () => {
-            return pageNumbers.map(pageNumber => <StyledPageNumber
+            return paginationRange?.map((pageNumber:number) => <StyledPageNumber
                     key={pageNumber}
-                    onClick={ e => setPage(pageNumber)}
+                    onClick={ e => onPageChange(pageNumber)}
                 >
                     <li style={{background:`${pageNumber ===  page ? '#fec018' : ''}`}}>{pageNumber}</li>
                 </StyledPageNumber>
@@ -75,7 +91,19 @@ const ResultsPanel = ({
 
         }
           
-        return <StyledPageNav>{renderLinks()}</StyledPageNav>
+        return <StyledPageNav>
+            <span
+                onClick={onPrevious}
+            >
+                Previous
+            </span>
+             {renderLinks()}
+             <span
+                onClick={onNext}
+            >
+                Next
+            </span>
+             </StyledPageNav>
     }
     
     const Users = () => {

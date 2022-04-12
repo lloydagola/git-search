@@ -72,6 +72,11 @@ export const StyledResultGrid = styled.div`
 export const StyledPageNav = styled.ul` 
     display: flex;
     flex-direction: row;
+    list-style-type: none;
+    
+    span{
+        cursor: pointer;
+    }
 `
 export const StyledPageNumber = styled.span`
     li{
@@ -80,8 +85,8 @@ export const StyledPageNumber = styled.span`
         padding: .5rem;
         background: #0392da;
         height: 2rem;
-        width: 2rem;
-        border-radius: 50%;
+        min-width: 2rem;
+        border-radius: 4rem;
         cursor: pointer;
     }
 `

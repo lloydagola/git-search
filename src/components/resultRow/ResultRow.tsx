@@ -10,8 +10,6 @@ import Followers from "../followers/Followers"
 
 
 const ResultRow = ({user}:UserProps) => {
-
-    console.log(user)
     
 
     return  <StyledLink to={`/results/${user.login}`} key={user.id}>
