@@ -15,10 +15,16 @@ interface Props{
 const Followers = ({login}:Props) => {
     const [followers, setFollowers] = useState([])
 
+    console.log(login)
+
 
     const handleFetchUserFollowers = async () => {
-        const res = await fetchUserFollowers(login)      
-        setFollowers(res)        
+        const res = await fetchUserFollowers(login)
+        
+        if(res){
+            console.log(res)
+            setFollowers(res)        
+        }
     }
 
     useEffect(() => {
@@ -35,7 +41,7 @@ const Followers = ({login}:Props) => {
 
 
     return <StyledFollowers>
-        <p>Followers: {followers.length}</p> 
+        <p>Followers: {followers?.length}</p> 
         <span>
             {
                 followers.length > 0 
