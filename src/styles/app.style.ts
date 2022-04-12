@@ -3,12 +3,12 @@ import {Link} from 'react-router-dom'
 import {devices} from '../utils/screenUtils'
 
 export const StyledSearchBar = styled.input` 
-    width: fit-content;
+    width:400px;
     height: 2.4rem;
     border-radius: 4rem;
     text-align: center;
     color: #444;
-    font-size: 1.6rem;
+    font-size: 1rem;
     margin: .4rem;
 
 `
@@ -126,7 +126,6 @@ export const StyledUserSummary = styled.div`
 
   
 `
-
 export const StyledParagraph = styled.p`
     border: 1px solid #fff;
     padding: 0.5rem 1rem ;
@@ -135,7 +134,6 @@ export const StyledParagraph = styled.p`
         margin: 0;
     }
 `
-
 export const StyledUserDetails = styled.div`
   text-align: left;
   padding:2rem;

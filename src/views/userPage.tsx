@@ -11,7 +11,6 @@ import {UserDetails} from '../models/user'
 
 //services
 import {fetchUser} from '../services/appService'
-import { devices } from '../utils/screenUtils'
 
 import {
   StyledUserGrid,
@@ -66,28 +65,24 @@ const UserPage = () => {
       
 
     }
-
     const renderUserName = (userName:string) => {
       if(!userName){
         return <StyledParagraph><h1>User name</h1></StyledParagraph>
       }
       return <StyledParagraph><h1>{userName}</h1></StyledParagraph>
     }
-
     const renderName = (name:string) => {
       if(!userName){
         return <StyledParagraph>...no name</StyledParagraph>
       }
       return <StyledParagraph>{name}</StyledParagraph>
     }
-
     const renderBio = (bio:string) => {
       if(!bio){
         return <StyledParagraph>...no bio</StyledParagraph>
       }
       return <StyledParagraph>{ bio }</StyledParagraph>
     }
-
     const renderLocation = (location:string) => {
       if(!location){
         return <StyledParagraph>...no location</StyledParagraph>
